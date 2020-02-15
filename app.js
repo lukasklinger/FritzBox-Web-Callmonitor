@@ -27,7 +27,7 @@ app.get('/', async function(req, res){
     res.send("Error: " + calls.error.message);
     res.end();
   } else {
-    data.calls = calls.slice(0, (parseInt(numberOfCalls) + 1));
+    data.calls = calls.slice(0, (parseInt(numberOfCalls)));
     res.render('index', data);
   }
 });
