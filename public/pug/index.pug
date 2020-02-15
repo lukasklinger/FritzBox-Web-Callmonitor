@@ -1,0 +1,53 @@
+mixin call(data)
+  div(class="media")
+    figure(class="media-left")
+      p(class="image is-64x64")
+        if(data.type == "incoming")
+          img(src="./img/incoming.png")
+        else if(data.type == "outgoing")
+          img(src="./img/outgoing.png")
+        else if(data.type == "missed")
+          img(src="./img/missed-call.png")
+        else
+          img(src="./img/unknown.png")
+    div(class="media-content")
+      div(class="content")
+        p
+          if(data.number)
+            strong #{data.number}
+          else
+            strong Unbekannt
+
+          if(data.name)
+            span   -  #{data.name}
+          br
+          span Länge: #{data.duration} (hh:mm)
+          br
+          span Datum: #{data.date}
+
+html
+  head
+    title Anrufe
+    link(rel="stylesheet" type="text/css" href="./css/bulma.min.css")
+    link(rel="apple-touch-icon" href="./img/phone.png")
+    link(rel="icon" href="./img/phone.png")
+    meta(name="apple-mobile-web-app-capable" content="yes")
+
+  body
+    section(class="hero is-primary")
+      div(class="hero-body")
+        div(class="container")
+          h1(class="title") Anrufliste
+
+    div(class="section")
+      each call in calls
+        +call(call)
+
+    div(class="section")
+      span Icons made by Creaticca Creative Agency from www.flaticon.com
+      br
+      span Icons made by Those Icons from www.flaticon.com
+      br
+      span Icons made by Smashicons from www.flaticon.com
+      br
+      span Icons made by Freepik from www.flaticon.com
