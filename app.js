@@ -4,13 +4,12 @@ const server = require('http').createServer(app);
 
 const pug = require('pug');
 
-const fritz = require('fritzbox.js')
 const options = {
   username: process.env.USER,
   password: process.env.PASSWORD,
   server: process.env.HOST || "fritz.box",
   protocol: process.env.PROTOCOL || "http"
-}
+};
 
 const numberOfCalls = process.env.CALLS || 20;
 
@@ -30,6 +29,7 @@ app.get('/', async function(req, res){
 
 async function updateCallList() {
   return new Promise(async function(resolve, reject) {
+    let fritz = require('fritzbox.js');
     let retryCount = 0;
     let finished = false;
     let lastError;
@@ -45,6 +45,7 @@ async function updateCallList() {
         console.log("Retries: " + retryCount);
         resolve(data);
       } catch (e) {
+        console.log("Error: " + e);
         lastError = e;
         retryCount++;
       }
