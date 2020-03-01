@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 const server = require('http').createServer(app);
+const fritz = require('fritzbox.js');
 
 const pug = require('pug');
 
-const options = {
+var options = {
   username: process.env.USER,
   password: process.env.PASSWORD,
   server: process.env.HOST || "fritz.box",
@@ -29,10 +30,12 @@ app.get('/', async function(req, res){
 
 async function updateCallList() {
   return new Promise(async function(resolve, reject) {
-    let fritz = require('fritzbox.js');
     let retryCount = 0;
     let finished = false;
     let lastError;
+
+    // remove old session ID to force fritzbox.js to sign in again
+    options.sid = undefined;
 
     while (retryCount < 3 && !finished) {
       try {
@@ -51,7 +54,10 @@ async function updateCallList() {
       }
     }
 
-    reject(lastError);
+    if(!finished) {
+      console.log(`Getting data failed after ${retryCount} retries.`);
+      reject(lastError);
+    }
   });
 }
 
