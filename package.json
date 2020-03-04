@@ -13,8 +13,11 @@
   "author": "lukasklinger",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
     "fritzbox.js": "^2.0.1",
-    "pug": "^2.0.4"
+    "fs": "0.0.1-security",
+    "pug": "^2.0.4",
+    "request": "^2.88.2"
   }
 }
