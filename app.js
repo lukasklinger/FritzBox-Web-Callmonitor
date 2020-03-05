@@ -3,8 +3,6 @@ const app = express();
 const server = require('http').createServer(app);
 const fritz = require('fritzbox.js');
 const request = require('request');
-const cheerio = require('cheerio');
-const fs = require('fs');
 const pug = require('pug');
 
 var options = {
@@ -40,7 +38,7 @@ async function getUnknownNumbers(callList) {
       if(entry.name == '') {
         try {
           let info = await resolveUnknownNumber(entry.number);
-          entry.name = info.name;
+          entry.name = `${info.name} (aus Das Örtliche)`;
         } catch (e) {
           // catches entries w/o names, nothing to be done here...
         }
