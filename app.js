@@ -32,25 +32,22 @@ app.get('/', async function(req, res){
   }
 });
 
-async function getUnknownNumbers(data) {
+async function getUnknownNumbers(callList) {
   return new Promise(async function(resolve, reject) {
-    for (let i = 0; i < data.length; i++) {
-      let entry = data[i];
-      
-      console.log(entry);
+    for (let i = 0; i < callList.calls.length; i++) {
+      let entry = callList.calls[i];
       
       if(entry.name == '') {
         try {
           let info = await resolveUnknownNumber(entry.number);
-          console.log(info);
           entry.name = info.name;
         } catch (e) {
-          console.log(e);
+          // catches entries w/o names, nothing to be done here...
         }
       }
     }
     
-    resolve(data);
+    resolve(callList);
   });
 }
 
